@@ -1,41 +1,65 @@
-import Link from 'next/link'
+import { useState } from 'react';
+import Error from 'next/error'
+import { useRouter } from 'next/router'
 import { useSettings } from '../context/settings'
 import { Settings, Categories } from '../components'
+import { Button } from '../components/common'
 
-export default function SettingsPage({ data }) {
-  const { category } = useSettings()
+export default function SettingsPage({data, error}) {
+  const { push } = useRouter()
+  const [amountError, setAmtError] = useState(false)
+  const [categoryError, setCtgError] = useState(false)
+  const { category, amount } = useSettings()
+
+  function startQuiz () {
+    if (category === null) {
+      setCtgError(true)
+      return;
+    } else {
+      setCtgError(false)
+    }
+    if (amount < 5 || amount > 20) {
+      setAmtError(true)
+      return;
+    } else {
+      setAmtError(false)
+    }
+    push(`/${category.name.replace(/ /g, '-')}`)
+  }
+
+  if (error) return <Error statusCode={error.code} title={error.message}/>
+
   return (
     <div className="relative px-2 py-4">
       <div className="flex-1">
         <Settings/>
+        {amountError? <p className="p-2 text-center text-sm text-red-400">Number of questions should be more than 5 and not more than 20!</p>: null}
       </div>
-      <div className="flex-1 pb-8">
+      <div className="flex-1 pb-12">
+        {categoryError? <p className="p-2 text-center text-sm text-red-400">Please select a category!</p>: null}
         <Categories list={data.trivia_categories}/>
       </div>
-      <div className="w-full fixed bottom-0">
-        <div className="">
-            <Link href={category? `/${category.name.replace(/ /g, '-')}`: ''}>
-                <p className="w-1/2 m-auto px-3 py-2 text-xl text-center bg-green-500 rounded">Start Quiz</p>
-            </Link> 
-        </div>
+      <div className="text-center w-full fixed bottom-0 py-1">
+          <Button type="primary" size="lg" click={startQuiz}>Start Quiz</Button>
       </div>
     </div>
   )
 }
 
 export async function getStaticProps(){
-  let data
-
-  try {
+  try{
     const response = await fetch('https://opentdb.com/api_category.php');
-    data = await response.json();
+    const data = await response.json();
+    return {
+      props: { data },
+    }
   } catch(error) {
-    throw new Error(error.message)
-  }
-
-  return {
-    props: {
-      data,
+    console.log(error)
+    return {
+      props: {
+        error: {code: error.code, message: error.message}
+      }
     }
   }
+
 }

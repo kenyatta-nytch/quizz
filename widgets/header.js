@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {useSession} from "next-auth/client";
+import { Button, StyledLink } from "../components/common"
 
 function Header() {
     const [session, loading] = useSession();
@@ -11,34 +12,21 @@ function Header() {
                 <p className="px-2 text-xl font-medium cursor-pointer">QUIZZ</p>
             </Link>
             <StartQuiz session={session}/>
-            <div className="px-2 cursor-pointer">{session? <LinkToProfile session={session}/> : <LinkToAuth/>}</div>
+            <div className="px-2 cursor-pointer">{session? 
+                <StyledLink to="/profile">{session?.user?.email || session?.user?.name}</StyledLink> :
+                <StyledLink to="/auth/signin">Sign In</StyledLink>
+            }</div>
         </div>
-    )
-}
-
-function LinkToProfile({session}) {
-    return (
-        <Link href='/profile'>
-            <p>{session?.user?.email || session?.user?.name}</p>
-        </Link>
-    )
-}
-
-function LinkToAuth() {
-    return (
-        <Link href="/api/auth/signin">
-            <p>Sign In</p>
-        </Link>
     )
 }
 
 function StartQuiz({session}) {
     const { push } = useRouter()
     
-    const handleClick = () => session? push('/settings') : push({query: {info: true}});
+    const handleClick = () => session? push('/settings') : push('/?info=true');
 
     return (
-        <button className="bg-white px-3 py-2 cursor-pointer" onClick={_=> handleClick()}>Take Quiz</button>
+        <Button type="primary" size="md" click={handleClick}>Take Quiz</Button>
     )
 }
 

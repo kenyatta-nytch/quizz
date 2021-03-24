@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { Button } from '../components/common'
 
 function WithSave({ children, data }) {
     const { push } = useRouter()
@@ -33,12 +34,12 @@ function WithSave({ children, data }) {
         <div>
             <div>{children}</div>
             <div>
-                <button
-                    type="button"
+                <Button
+                    type="secondary"
+                    size="md"
                     disabled={isSaving}
-                    onClick={_=> handleSave()}
-                    className="p-2"
-                >{isSaving? 'Saving..':'Save'}</button>
+                    click={handleSave}
+                >{isSaving? 'Saving..':'Save Progress'}</Button>
             </div>
         </div>
     )

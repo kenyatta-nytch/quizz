@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
+import Error from 'next/error'
 import { useSession } from 'next-auth/client';
 import processData from '../lib/helpers';
 import { Results, Question, WithSave } from '../components';
 import { useSettings } from '../context/settings';
-import { Button } from '../components/common'
+import { QuizButton } from '../components/common'
 
 function Quiz(){
     const [session] = useSession();
@@ -60,7 +61,7 @@ function Quiz(){
             user: session? session.user: null,
             category: category.name,
             type: type || 'Any Type',
-            difficulty: difficulty || 'Any Type',
+            difficulty: difficulty || 'Mixed Difficulty',
             results: userAnswers,
             amount,
             score,
@@ -84,7 +85,7 @@ function Quiz(){
         try{
             const response = await axios.get('https://opentdb.com/api.php',{params});
             const value = processData(response.data)
-    
+
             setData(value);
         } catch(error) {
             setError(error);
@@ -93,7 +94,7 @@ function Quiz(){
 
     useEffect(() => { setQuestion(data?.[counter]) }, [counter, data])
 
-    if (error) return <div>{error.message}</div>
+    if (error) return <Error statusCode={error.code} title={error.message}/>
 
     if (isFinished) {
         if (session) {
@@ -114,8 +115,8 @@ function Quiz(){
                 </div>
                 <div className="py-2 w-full flex justify-center">
                     {counter === data?.length -1?
-                        <Button click={finish} isAnswered={isAnswered}>Finish Attempt</Button> :
-                        <Button click={next} isAnswered={isAnswered}>Next</Button>
+                        <QuizButton click={finish} isAnswered={isAnswered}>Finish Attempt</QuizButton> :
+                        <QuizButton click={next} isAnswered={isAnswered}>Next</QuizButton>
                     }
                 </div>
             </div>

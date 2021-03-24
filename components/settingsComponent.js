@@ -9,12 +9,12 @@ function Settings() {
         <div className="p-2 min-w-full min-h-full mt-8">
             <div className="flex flex-col lg:flex-row lg:justify-evenly">
                 <div className="pb-8 flex justify-center items-center">
-                    <label className="text-gray-700">Number of Questions:</label>
+                    <label className="text-gray-700 px-2">Number of Questions:</label>
                     <input
                         type="number"
                         placeholder="10"
                         onChange={e => setNumber(e.target.value)}
-                        className="focus:outline-none bg-gray-100 p-2 w-20 text-lg"
+                        className="focus:outline-none border-b border-gray-700 p-2 w-20 text-center text-lg"
                     />
                 </div>
                 <div className="flex-1 flex flex-col lg:flex-row lg:justify-evenly">

@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useSettings } from '../context/settings';
 
 function Categories({list}) {
-    const [active, setActive] = useState()
-    const { setCategory } = useSettings()
+    const { setCategory, category } = useSettings()
+    const [active, setActive] = useState(category)
+    console.log(active)
     function handleClick(val) {
-        setActive(val);
         setCategory(val);
+        setActive(val);
     }
     return(
         <div className="relative min-h-screen border-t flex justify-center ">

@@ -30,7 +30,12 @@ const options = {
             clientSecret: GITHUB_SECRET,
         })
     ],
-    database: process.env.DATABASE_URL
+    database: process.env.DATABASE_URL,
+    pages: {
+        signIn: '../../auth/signin',
+        error: '../../auth/error',
+        verifyRequest: '../../auth/verify-request'
+    }
 }
 
 export default (req, res) => NextAuth(req, res, options)

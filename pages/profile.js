@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getSession, signOut } from 'next-auth/client'
 import { connectToDatabase } from '../lib'
-import { Results } from '../components'
+import { Results, Avatar } from '../components'
 
 export default function Profile({history, session}) {
     const [open, setOpen] = useState(null)
@@ -10,9 +10,9 @@ export default function Profile({history, session}) {
 
     if (open) {
         return (
-            <div>
-                <div>
-                    <button type="button" onClick={_ => setOpen(null)}>Back</button>
+            <div className="relative">
+                <div className="">
+                    <button type="button" className="p-1 text-xl" onClick={_ => setOpen(null)}>&larr;</button>
                 </div>
                 <Results data={open}/>
             </div>
@@ -20,20 +20,25 @@ export default function Profile({history, session}) {
     }
 
     return (
-        <div>
-            <button type="button" onClick={_=> signOut({callbackUrl: '/'})}>Sign Out</button>
+        <div className="p-2 m-auto sm:w-1/2 md:w-2/5 divide-y">
+            <div className="">
+                <Avatar/>
+            </div>
+            <div className="py-2">
             {history.map((hs,idx) => (
-                <div key={idx} onClick={_=> setOpen(hs)} className="w-max p-2 divide-y cursor-pointer shadow-md">
-                    <div className="py-1">
-                        <p className="px-2 inline"><span className="text-gray-500">Quiz Category: </span>{hs.category}</p>
-                        <p className="px-2 inline"><span className="text-gray-500">Question Type: </span>{hs.type}</p>
+                <div key={idx} onClick={_=> setOpen(hs)} className="w-full mb-2 p-2 divide-y cursor-pointer shadow-md">
+                    <div className="py-1 text-center">
+                        <p className="px-2 text-lg text-gray-700 inline">{hs.category}</p>
+                        <p className="px-2 inline hidden"><span className="text-gray-500">Question Type: </span>{hs.type}</p>
                     </div>
-                    <div className="py-1">
-                        <p className="px-2 inline"><span className="text-gray-500">Score: </span>{hs.score}</p>
-                        <p className="px-2 inline"><span className="text-gray-500">Questions: </span>{hs.amount}</p>
+                    <div className="py-1 text-center">
+                        <p className="mx-3 px-2 inline text-gray-900"><span className="text-sm text-gray-500">Scored </span>{hs.score}</p>
+                        <p className="mx-3 px-2 inline text-gray-900">{hs.amount}<span className="text-sm text-gray-500"> Questions</span></p>
+                        <p className="mx-3 px-2 inline text-gray-900">{hs.type}</p>
                     </div>
                 </div>
             ))}
+            </div>
         </div>
     )
 }
