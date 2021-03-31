@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { getProviders, signIn } from 'next-auth/client'
+import { providers, signIn } from 'next-auth/client'
 
 const btn_style = "w-full py-3 my-2 text-center border border-gray-500 rounded-md hover:bg-gray-500 hover:text-white focus:outline-none"
 const profile = process.env.NEXTAUTH_URL+'/profile'
@@ -15,7 +15,8 @@ function SignIn(props) {
 }
 
 export async function getStaticProps() {
-    return { props: await getProviders() }
+    const providers = await providers()
+    return { props: { providers } }
 }
 
 function EmailAuth() {
