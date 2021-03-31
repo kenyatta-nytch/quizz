@@ -4,19 +4,19 @@ import { providers, signIn } from 'next-auth/client'
 const btn_style = "w-full py-3 my-2 text-center border border-gray-500 rounded-md hover:bg-gray-500 hover:text-white focus:outline-none"
 const profile = process.env.NEXTAUTH_URL+'/profile'
 
-function SignIn(props) {
+function SignIn({provs}) {
     return (
         <div className="w-full h-screen p-3">
             <div className='max-w-md h-4/5 m-auto flex flex-col justify-center'>
-                {Object.values(props).map((provider, idx) => (provider.type === 'email'? <EmailAuth key={idx}/>:<SocialAuth key={idx} {...provider}/>))}
+                {Object.values(provs).map((provider, idx) => (provider.type === 'email'? <EmailAuth key={idx}/>:<SocialAuth key={idx} {...provider}/>))}
             </div>
         </div>
     )
 }
 
-export async function getStaticProps() {
-    const providers = await providers()
-    return { props: { providers } }
+export async function getServerSideProps() {
+    const provs = await providers()
+    return { props: { provs } }
 }
 
 function EmailAuth() {
