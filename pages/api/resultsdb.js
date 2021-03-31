@@ -16,7 +16,6 @@ export default async (req, res) => {
   }
   if (method === 'GET'){
     const results = await historyCollection.find({}).toArray()
-    console.log(results)
     res.status(200).json({ message: 'Accepting post request only' })
   }
 }

@@ -2,13 +2,13 @@ import {useState} from 'react';
 import { getProviders, signIn } from 'next-auth/client'
 
 const btn_style = "w-full py-3 my-2 text-center border border-gray-500 rounded-md hover:bg-gray-500 hover:text-white focus:outline-none"
-const profile = 'http://localhost:3000/profile'
+const profile = process.env.NEXTAUTH_URL+'/profile'
 
 function SignIn(props) {
     return (
         <div className="w-full h-screen p-3">
             <div className='max-w-md h-4/5 m-auto flex flex-col justify-center'>
-                {Object.values(props).map(provider => (provider.type === 'email'? <EmailAuth/>:<SocialAuth {...provider}/>))}
+                {Object.values(props).map((provider, idx) => (provider.type === 'email'? <EmailAuth key={idx}/>:<SocialAuth key={idx} {...provider}/>))}
             </div>
         </div>
     )

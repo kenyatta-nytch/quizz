@@ -2,6 +2,8 @@ import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers'
 
 const {
+    NEXTAUTH_URL,
+    MONGO_URL,
     EMAIL_SERVER_HOST,
     EMAIL_SERVER_PORT,
     EMAIL_SERVER_USER,
@@ -12,7 +14,7 @@ const {
 } = process.env
 
 const options = {
-    site: process.env.NEXTAUTH_URL,
+    site: NEXTAUTH_URL,
     providers: [
         Providers.Email({
             server: {
@@ -30,7 +32,7 @@ const options = {
             clientSecret: GITHUB_SECRET,
         })
     ],
-    database: process.env.DATABASE_URL,
+    database: MONGO_URL,
     pages: {
         signIn: '../../auth/signin',
         error: '../../auth/error',
