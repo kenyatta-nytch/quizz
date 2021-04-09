@@ -6,7 +6,7 @@ const profile = process.env.NEXTAUTH_URL+'/profile'
 
 function SignIn({provs}) {
     return (
-        <div className="w-full h-screen p-3">
+        <div className="w-full h-full p-3">
             <div className='max-w-md h-4/5 m-auto flex flex-col justify-center'>
                 {Object.values(provs).map((provider, idx) => (provider.type === 'email'? <EmailAuth key={idx}/>:<SocialAuth key={idx} {...provider}/>))}
             </div>
