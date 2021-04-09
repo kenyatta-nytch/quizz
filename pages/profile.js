@@ -6,7 +6,7 @@ import { Results, Avatar } from '../components'
 
 export default function Profile({history, session, error}) {
     const [open, setOpen] = useState(null)
-
+    console.log(session);
     if (error) return <Error title={error.message}/>
 
     if (!session) return <p>Login first to get access</p>
