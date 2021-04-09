@@ -20,18 +20,18 @@ export function QuizButton({click, isAnswered, children}) {
     > {children} </button>
 }
 
-export function Button({type, size, click, children, ...props}) {
+export function Button({type, size, click, children, extra, ...props}) {
     return <button
         {...props}
         type="button"
         onClick={_=> click()}
-        className={`rounded capitalize ${types[type]} ${sizes[size]}`}
+        className={`rounded capitalize ${types[type]} ${sizes[size]} ${extra}`}
     >{ children }</button>
 }
 
 export function StyledLink({to, children}) {
     return <Link
         href={to}>
-        <p className="p-2 text-gray-500 hover:text-gray-900 capitalize transition cursor-pointer">{ children }</p>
+        <p className="p-2 text-gray-500 hover:text-gray-900 transition cursor-pointer">{ children }</p>
     </Link>
 }

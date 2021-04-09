@@ -1,6 +1,6 @@
 function Footer(){
     return(
-        <div className="w-full"></div>
+        <footer className="w-full"></footer>
     )
 }
 

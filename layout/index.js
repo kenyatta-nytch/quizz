@@ -15,14 +15,14 @@ function Layout({ children }) {
     }
 
     return(
-        <div>
+        <div className="min-h-screen grid grid-rows-layout">
             <Head>
                 <title>Quizz</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div id="modal__container"></div>
+            <div id="modal__container" className="absolute top-0"></div>
             <Header/>
-            <main className="min-h-screen">
+            <main className="">
                 {renderInfo()}
                 {children}
             </main>

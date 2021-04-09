@@ -7,7 +7,7 @@ function Header() {
     const [session, loading] = useSession();
 
     return(
-        <div className="w-full h-16 shadow-md flex items-center justify-between">
+        <header className="w-full shadow-md flex items-center justify-between">
             <Link href="/">
                 <p className="px-2 text-xl font-medium cursor-pointer">QUIZZ</p>
             </Link>
@@ -16,7 +16,7 @@ function Header() {
                 <StyledLink to="/profile">{session?.user?.email || session?.user?.name}</StyledLink> :
                 <StyledLink to="/auth/signin">Sign In</StyledLink>
             }</div>
-        </div>
+        </header>
     )
 }
 

@@ -33,9 +33,9 @@ function WithSave({ children, data }) {
     return (
         <div>
             <div>{children}</div>
-            <div>
+            <div className="w-full flex justify-center">
                 <Button
-                    type="secondary"
+                    type="primary"
                     size="md"
                     disabled={isSaving}
                     click={handleSave}

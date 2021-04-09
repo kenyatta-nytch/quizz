@@ -2,14 +2,13 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import Error from 'next/error'
 import { useSession } from 'next-auth/client';
-import processData from '../lib/helpers';
+import { processData } from '../lib/helpers';
 import { Results, Question, WithSave } from '../components';
 import { useSettings } from '../context/settings';
 import { QuizButton } from '../components/common'
 
 function Quiz(){
     const [session] = useSession();
-    console.log(session)
     const [data, setData] = useState();
     const [error, setError] = useState();
 
@@ -60,7 +59,7 @@ function Quiz(){
         const data = {
             user: session? session.user: null,
             category: category.name,
-            type: type || 'Any Type',
+            type: type || 'Mixed Type',
             difficulty: difficulty || 'Mixed Difficulty',
             results: userAnswers,
             amount,

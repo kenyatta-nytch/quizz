@@ -4,33 +4,23 @@ import Providers from 'next-auth/providers'
 const {
     NEXTAUTH_URL,
     MONGO_URL,
-    EMAIL_SERVER_HOST,
-    EMAIL_SERVER_PORT,
-    EMAIL_SERVER_USER,
-    EMAIL_SERVER_PASSWORD,
-    EMAIL_FROM,
     GITHUB_ID,
-    GITHUB_SECRET
+    GITHUB_SECRET,
+    GOOGLE_ID,
+    GOOGLE_SECRET
 } = process.env
 
 const options = {
     site: NEXTAUTH_URL,
     providers: [
-        Providers.Email({
-            server: {
-                host: EMAIL_SERVER_HOST,
-                port: EMAIL_SERVER_PORT,
-                auth: {
-                    user: EMAIL_SERVER_USER,
-                    pass: EMAIL_SERVER_PASSWORD
-                },
-            },
-            from: EMAIL_FROM
+        Providers.Google({
+            clientId: GOOGLE_ID,
+            clientSecret: GOOGLE_SECRET,
         }),
         Providers.GitHub({
             clientId: GITHUB_ID,
             clientSecret: GITHUB_SECRET,
-        })
+        }),
     ],
     database: MONGO_URL,
     pages: {

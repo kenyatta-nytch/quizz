@@ -21,7 +21,7 @@ function Settings() {
                     <div className="relative py-2 lg:mx-2 flex-1 flex justify-center items-center border-t">
                         <p className="absolute px-1 -top-3 text-gray-400 bg-white">Select Type</p>
                         <div className="w-full pb-5 mt-2 flex justify-evenly">
-                            <p className={`p-2 text-center shadow rounded ${type === null? ACTIVE : INACTIVE} `} onClick={_=> setType(null)}>Any Type</p>
+                            <p className={`p-2 text-center shadow rounded ${type === null? ACTIVE : INACTIVE} `} onClick={_=> setType(null)}>Mixed Type</p>
                             <p className={`p-2 text-center shadow rounded ${type === 'multiple'? ACTIVE : INACTIVE} `} onClick={_=> setType("multiple")}>Multiple Choices</p>
                             <p className={`p-2 text-center shadow rounded ${type === 'boolean'? ACTIVE : INACTIVE} `} onClick={_=> setType("boolean")}>True or False</p>
                         </div>
@@ -29,7 +29,7 @@ function Settings() {
                     <div className="relative py-2 lg:mx-2 flex-1 flex justify-center items-center border-t">
                         <p className="absolute px-1 -top-3 text-gray-400 bg-white">Select Difficulty</p>
                         <div className="w-full pb-5 mt-2 flex justify-evenly">
-                            <p className={`p-2 text-center shadow rounded ${difficulty === null? ACTIVE : INACTIVE}`} onClick={_=> setDifficulty(null)}>Any Difficulty</p>
+                            <p className={`p-2 text-center shadow rounded ${difficulty === null? ACTIVE : INACTIVE}`} onClick={_=> setDifficulty(null)}>Mixed Difficulty</p>
                             <p className={`p-2 text-center shadow rounded ${difficulty === 'easy'? ACTIVE : INACTIVE}`} onClick={_=> setDifficulty("easy")}>Easy</p>
                             <p className={`p-2 text-center shadow rounded ${difficulty === 'medium'? ACTIVE : INACTIVE}`} onClick={_=> setDifficulty("medium")}>Medium</p>
                             <p className={`p-2 text-center shadow rounded ${difficulty === 'hard'? ACTIVE : INACTIVE}`} onClick={_=> setDifficulty("hard")}>Hard</p>
