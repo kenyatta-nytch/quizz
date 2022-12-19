@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {useSession} from "next-auth/client";
+import {useSession} from "next-auth/react";
 import { Button, StyledLink } from "../components/common"
 
 function Header() {
-    const [session, loading] = useSession();
+    const { data: session } = useSession();
 
     return(
         <header className="w-full shadow-md flex items-center justify-between">

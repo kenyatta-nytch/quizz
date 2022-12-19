@@ -1,6 +1,9 @@
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers'
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import EmailProvider from 'next-auth/providers/email';
+import { clientPromise } from '../../../lib';
 
+/*
 const {
     NEXTAUTH_URL,
     MONGO_URL,
@@ -9,25 +12,24 @@ const {
     GOOGLE_ID,
     GOOGLE_SECRET
 } = process.env
+*/
 
-const options = {
-    site: NEXTAUTH_URL,
-    providers: [
-        Providers.Google({
-            clientId: GOOGLE_ID,
-            clientSecret: GOOGLE_SECRET,
-        }),
-        Providers.GitHub({
-            clientId: GITHUB_ID,
-            clientSecret: GITHUB_SECRET,
-        }),
-    ],
-    database: MONGO_URL,
-    pages: {
-        signIn: '../../auth/signin',
-        error: '../../auth/error',
-        verifyRequest: '../../auth/verify-request'
-    }
+console.info('setting up auth:', process.env.EMAIL_SERVER_HOST, process.env.EMAIL_FROM);
+export const authOptions = {
+  providers: [
+    EmailProvider({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD
+        }
+      },
+      from: process.env.EMAIL_FROM
+    }),
+  ],
+	adapter: MongoDBAdapter(clientPromise),
 }
 
-export default (req, res) => NextAuth(req, res, options)
+export default NextAuth(authOptions)

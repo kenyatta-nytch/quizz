@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import Error from 'next/error'
-import { useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/react';
 import { processData } from '../lib/helpers';
 import { Results, Question, WithSave } from '../components';
 import { useSettings } from '../context/settings';
 import { QuizButton } from '../components/common'
 
 function Quiz(){
-    const [session] = useSession();
+    const {data: session} = useSession();
     const [data, setData] = useState();
     const [error, setError] = useState();
 

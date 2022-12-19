@@ -1,21 +1,21 @@
 import {useState} from 'react';
-import { providers, signIn } from 'next-auth/client'
+import { getProviders, signIn } from 'next-auth/react'
 
 const btn_style = "w-full py-3 my-2 text-center border border-gray-500 rounded-md hover:bg-gray-500 hover:text-white focus:outline-none"
-const profile = process.env.NEXTAUTH_URL+'/profile'
+const profile = '/profile'
 
 function SignIn({provs}) {
     return (
         <div className="w-full h-full p-3">
             <div className='max-w-md h-4/5 m-auto flex flex-col justify-center'>
-                {Object.values(provs).map((provider, idx) => (provider.type === 'email'? <EmailAuth key={idx}/>:<SocialAuth key={idx} {...provider}/>))}
+                {provs && Object.values(provs).map((provider, idx) => (provider.type === 'email'? <EmailAuth key={idx}/>:<SocialAuth key={idx} {...provider}/>))}
             </div>
         </div>
     )
 }
 
 export async function getServerSideProps() {
-    const provs = await providers()
+    const provs = await getProviders()
     return { props: { provs } }
 }
 
@@ -26,7 +26,7 @@ function EmailAuth() {
     async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true);
-        const res = await signIn('email', {email, callbackUrl: profile})
+        const res = signIn('email', {email, callbackUrl: profile})
         if (res) setLoading(false);
     }
 

@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import { useSession, signOut} from 'next-auth/client'
+import { useSession, signOut} from 'next-auth/react'
 import { Button } from '../components/common'
 
 function Avatar() {
-    const [ session ] = useSession()
+    const { data: session } = useSession()
 
     const handleClick = () => signOut({callbackUrl: '/'})
 

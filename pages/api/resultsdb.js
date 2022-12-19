@@ -2,7 +2,7 @@ import {connectToDatabase} from '../../lib';
 
 export default async (req, res) => {
   const {method, body} = req
-  const {client, db} = await connectToDatabase()
+  const {client, db} = connectToDatabase()
 
   const userCollection = db.collection('users');
   const historyCollection = db.collection('history')
