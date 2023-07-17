@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from './api/auth/[...nextauth]';
 import { connectToDatabase } from '../lib'
-import { Results, Avatar } from '../components'
+import { Result, Avatar, ResultCard } from '../components'
 
 export default function Profile({history, session, error}) {
 	const [open, setOpen] = useState(null)
@@ -12,36 +12,27 @@ export default function Profile({history, session, error}) {
 
 	if (!session) return <p>Login first to get access</p>
 
-	if (open) {
-		return (
-			<div className="relative">
-				<div className="">
-					<button type="button" className="p-1 text-xl" onClick={_ => setOpen(null)}>&larr; Back</button>
-				</div>
-				<Results data={open}/>
-			</div>
-		)
-	}
+	// if (open) {
+	// 	return (
+	// 		<div className="relative">
+	// 			<div className="">
+	// 				<button type="button" className="p-1 text-xl" onClick={_ => setOpen(null)}>&larr; Back</button>
+	// 			</div>
+	// 			<Result data={open}/>
+	// 		</div>
+	// 	)
+	// }
 
 	return (
-		<div className="m-auto h-full bg-gray-100 sm:w-1/2 md:w-2/5 divide-y">
-			<div className="">
-				<Avatar/>
+		<div className="relative flex flex-1">
+			<div style={{'flex': 3}}>
+				{open ?
+					(<Result data={open} close={() => setOpen(null)}/>) :
+					(history.map((hs,idx) => <ResultCard key={idx} data={hs} click={setOpen}/>))
+				}
 			</div>
-			<div className="py-3">
-			{history.map((hs,idx) => (
-				<div key={idx} onClick={_=> setOpen(hs)} className="bg-white w-5/6 mb-2 mx-auto p-2 divide-y cursor-pointer shadow-md">
-					<div className="py-1 text-center">
-						<p className="px-2 text-lg text-gray-700 inline">{hs.category}</p>
-						<p className="px-2 inline hidden"><span className="text-gray-500">Question Type: </span>{hs.type}</p>
-					</div>
-					<div className="py-1 text-center">
-						<p className="mx-3 px-2 inline text-gray-900"><span className="text-sm text-gray-500">Scored </span>{hs.score}</p>
-						<p className="mx-3 px-2 inline text-gray-900">{hs.amount}<span className="text-sm text-gray-500"> Questions</span></p>
-						<p className="mx-3 px-2 inline text-gray-900">{hs.type}</p>
-					</div>
-				</div>
-			))}
+			<div style={{'flex': 2}} className="bg-purple-300">
+				
 			</div>
 		</div>
 	)

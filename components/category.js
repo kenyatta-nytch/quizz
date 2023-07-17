@@ -1,25 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSettings } from '../context/settings';
 
 function Categories({list}) {
-    const { setCategory, category } = useSettings()
-    const [active, setActive] = useState(category)
-    function handleClick(val) {
-        setCategory(val);
-        setActive(val);
-    }
-    return(
-        <div className="relative min-h-screen border-t flex justify-center ">
-            <p className="absolute px-1 -top-3 text-gray-400 bg-white">Select Category</p>
-            <div className="mt-3 grid gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6 grid-rows">
-            {list && list.map((ctg,idx) => (
-                <div onClick={_=> handleClick(ctg)} key={idx} className={`h-24 md:h-32 p-2 flex justify-center items-center shadow-md cursor-pointer ${ctg === active? 'bg-blue-500 text-white':''}`}>
-                    <p className="text-center">{ctg.name}</p>
-                </div>
-            ))}
-            </div>
-        </div>
-    )
+	const { setCategory, category } = useSettings()
+	const [active, setActive] = useState(category)
+	useEffect(() => {
+		setActive(category);
+	}, [category])
+	function handleClick(val) {
+		setCategory(val);
+		setActive(val);
+	}
+	return(
+		<div className="relative flex flex-col p-2">
+			<div className='flex justify-start pb-2'>
+				<p className="text-gray-400 font-semibold bg-white">Pick A Category:</p>
+			</div>
+			<div className="flex-1 flex flex-wrap items-center md:justify-start">
+			{list && list.map((ctg,idx) => (
+				<div onClick={_=> handleClick(ctg)} key={idx} className={`mx-2 mb-2 px-2 py-1 flex justify-center items-center rounded-full shadow-inner cursor-pointer transition ease-linear duration-150 ${ctg === active? 'border-secondary text-secondary border-2 font-semibold':'text-gray-600 border border-gray-400 hover:text-purple-500 hover:border-primary'}`}>
+					<p className="text-center">{ctg.name}</p>
+				</div>
+			))}
+			</div>
+		</div>
+	)
 }
 
 export default Categories

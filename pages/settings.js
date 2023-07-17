@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useSettings } from '../context/settings'
 import { formatCategoryNames } from '../lib/helpers';
 import { Settings, Categories } from '../components'
-import { Button } from '../components/common'
 
 export default function SettingsPage({categories, error}) {
   const { push } = useRouter()
@@ -31,17 +30,9 @@ export default function SettingsPage({categories, error}) {
   if (error) return <Error statusCode={error.code} title={error.message}/>
 
   return (
-    <div className="relative px-2 py-4">
-      <div className="flex-1">
-        <Settings/>
-        {amountError? <p className="p-2 text-center text-sm text-red-400">Number of questions should be more than 5 and not more than 20!</p>: null}
-      </div>
-      <div className="flex-1 pb-12">
-        {categoryError? <p className="p-2 text-center text-sm text-red-400">Please select a category!</p>: null}
-        <Categories list={categories}/>
-      </div>
-      <div className="text-center w-full fixed bottom-0 py-1">
-          <Button type="primary" size="lg" click={startQuiz}>Start Quiz</Button>
+    <div className="w-full h-full flex justify-center items-center p-2">
+      <div className='max-w-xl md:rounded md:shadow-md md:p-2'>
+        <Settings start={startQuiz} categories={categories}/>
       </div>
     </div>
   )

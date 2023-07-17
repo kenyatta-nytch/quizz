@@ -5,7 +5,7 @@ const SettingsContext = createContext()
 
 function SettingsProvider({ children }) {
     const [category, setCategory] = useState(null)
-    const [amount, setNumber] = useState(10)
+    const [amount, setNumber] = useState(5)
     const [type, setType] = useState(null)
     const [difficulty, setDifficulty] = useState(null)
     const [time, setTime] = useState(0 || null)

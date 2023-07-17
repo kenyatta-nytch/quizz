@@ -6,7 +6,7 @@ import { Button } from '../components/common'
 function WithSave({ children, data }) {
     const { push } = useRouter()
     const [isSaving, setSave] = useState(false)
-    const {isError, setIsError} = useState(false)
+    const [isError, setIsError] = useState(false)
 
     async function handleSave() {
         setSave(true)

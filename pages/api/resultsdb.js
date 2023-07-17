@@ -1,9 +1,10 @@
 import {connectToDatabase} from '../../lib';
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   const {method, body} = req
-  const {client, db} = connectToDatabase()
+  const {client, db} = await connectToDatabase()
 
+  console.log(db);
   const userCollection = db.collection('users');
   const historyCollection = db.collection('history')
 
@@ -19,3 +20,5 @@ export default async (req, res) => {
     res.status(200).json({ message: 'Accepting post request only' })
   }
 }
+
+export default fn;
