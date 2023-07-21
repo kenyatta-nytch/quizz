@@ -91,20 +91,9 @@ function Quiz(){
 
 	if (error) return <Error statusCode={error.code} title={error.message}/>
 
-	if (isFinished) {
-		if (session) {
-			return(
-				<WithSave data={results}>
-					<Result data={results}/>
-				</WithSave>
-			)
-		}
-		return <Result data={results}/>
-	}
-
 	return(
 		<div className="h-full p-2 flex justify-center items-center">
-			<div className="w-full sm:w-4/5 md:2/3 lg:w-1/2">
+			{isFinished? <Result data={results}/> : <div className="w-full sm:w-4/5 md:2/3 lg:w-1/2">
 				<div>
 					<Question data={currentQtn} onAnswerSelect={handleAnswerSelect}/>
 				</div>
@@ -113,7 +102,7 @@ function Quiz(){
 						<QuizButton click={finish} isAnswered={isAnswered}>Finish Attempt</QuizButton> :
 						<QuizButton click={next} isAnswered={isAnswered}>Next</QuizButton>}
 				</div>
-			</div>
+			</div>}
 		</div>
 	)
 }
