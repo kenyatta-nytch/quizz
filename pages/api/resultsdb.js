@@ -4,7 +4,6 @@ const fn = async (req, res) => {
   const {method, body} = req
   const {client, db} = await connectToDatabase()
 
-  console.log(db);
   const userCollection = db.collection('users');
   const historyCollection = db.collection('history')
 
